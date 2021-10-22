@@ -5,6 +5,11 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 
+// import replace from '@rollup/plugin-replace';
+// import dotenv from 'dotenv';
+
+// dotenv.config();
+
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
@@ -17,8 +22,8 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
-				stdio: ['ignore', 'inherit', 'inherit'],
+			server = require('child_process').spawn('npm', [ 'run', 'start', '--', '--dev' ], {
+				stdio: [ 'ignore', 'inherit', 'inherit' ],
 				shell: true
 			});
 
@@ -37,6 +42,10 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		// replace({
+		// 	tokenEndPoint: JSON.stringify(process.env.TOKEN_ENDPOINT),
+		// 	roomID: JSON.stringify(process.env.ROOM_ID)
+		// }),
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
@@ -54,7 +63,7 @@ export default {
 		// https://github.com/rollup/plugins/tree/master/packages/commonjs
 		resolve({
 			browser: true,
-			dedupe: ['svelte']
+			dedupe: [ 'svelte' ]
 		}),
 		commonjs(),
 
