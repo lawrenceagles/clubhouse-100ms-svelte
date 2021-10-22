@@ -1,30 +1,33 @@
 <script>
-	export let name;
+	 import { HMSReactiveStore, selectIsConnectedToRoom } from '@100mslive/hms-video-store';
+	 import JoinRoom from './components/JoinRoom.svelte';
+	 import Room from './components/Room.svelte';
+
+	let isConnected = false;
+	const hms = new HMSReactiveStore();
+	const hmsStore = hms.getStore();
+	hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
+
+
+	function onConnection(connectedToRoom) {
+		if(connectedToRoom) {
+			isConnected = true;
+		}else {
+			isConnected = false;
+		}
+	}
+
+
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	{#if isConnected }
+		<Room />
+	{:else}
+		<JoinRoom />
+	{/if}
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>

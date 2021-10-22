@@ -1,12 +1,11 @@
 <script>
     import { HMSReactiveStore, selectPeers } from '@100mslive/hms-video-store';
-    import Peer from "./Peer.svelte";
     import Footer from "./Footer.svelte";
 
     const hms = new HMSReactiveStore();
     const hmsStore = hms.getStore();
 
-    const peers = hmsStore(selectPeers);
+    const peers = hmsStore.getState(selectPeers);
 </script>
 
 <section class="bg-gray-200 relative min-h-screen antialiased border-t-8 border-black">
